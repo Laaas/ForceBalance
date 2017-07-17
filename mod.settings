@@ -1,20 +1,10 @@
-name        = "Shine JoinTeam"
-source_dir  = ""
-output_dir  = ""
+name        = "[Shine] Local Hive (& JoinTeam)"
+source_dir  = "source"
+output_dir  = "output"
 description = [=[
-
-
-
-# NS2 Shine JoinTeam
-ModID: 287aa07b
-
-Restrict the teams a player can join based on their hiveskill, the averages skills of each team and the number of players in each team.
-More information are available on github: https://github.com/BenjaminJacobs1/JoinTeam
-
-
-	]=]
+This mod adds a local hive equivalent for elo.
+This mod also includes a modified version of [Shine] JoinTeam.
+]=]
 image       = "preview.jpg"
 tag_modtype = "Tool"
-tag_support = ""
-publish_id = "287aa07b"
-
+tag_support = "Must be run on Server"
