@@ -1,6 +1,6 @@
 name        = "[Shine] Local Hive (& JoinTeam)"
 source_dir  = "source"
-output_dir  = "output"
+output_dir  = "."
 description = [=[
 This mod adds a local hive equivalent for elo.
 This mod also includes a modified version of [Shine] JoinTeam.
