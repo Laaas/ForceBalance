@@ -3,7 +3,7 @@ source_dir  = "source"
 output_dir  = "."
 description = [=[
 This mod adds a local hive equivalent for elo.
-This mod also includes a modified version of [Shine] JoinTeam.
+This mod also includes a modified version of [Shine] JoinTeam that relies on total team skills.
 ]=]
 image       = "preview.jpg"
 tag_modtype = "Tool"
