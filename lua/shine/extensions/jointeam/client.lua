@@ -43,11 +43,32 @@ function Plugin:NetworkUpdate()
 		return
 	end
 
-	local localskill = player:GetPlayerSkill()
-	local maxdiff = self.dt.maxdiff
+	local skill   = player:GetPlayerSkill()
+	local maxprob = self.dt.maxprob
 	local team1   = self.dt.team1
 	local team2   = self.dt.team2
-	local reldiff = 2^math.abs(math.log(team1 / team2, 2))
+
+	local team1_n = team1 + skill
+	local team2_n = team2 + skill
+
+	local playercount = 0
+	local teaminfos   = GetEntities "TeamInfo"
+	for _, info in ipairs(teaminfos) do
+		if info:GetTeamNumber() == 1 or info:GetTeamNumber() == 2 then
+			playercount = playercount + info:GetPlayerCount()
+		end
+	end
+
+	local p  = self:CalculateProbability(team1,   team2,   playercount)
+	local p1 = self:CalculateProbability(team1_n, team2,   playercount)
+	local p2 = self:CalculateProbability(team1,   team2_n, playercount)
+
+	local p1abs = math.abs(p1 - 0.5)
+	local p2abs = math.abs(p1 - 0.5)
+
+	if self.dt.acceptable then
+		maxprob = math.max(maxprob, math.abs(p - 0.5))
+	end
 
 	do
 		local text = self.text_current
@@ -55,37 +76,31 @@ function Plugin:NetworkUpdate()
 		text:SetIsVisible(true)
 
 		text.Text =
-			string.format("%s M: %d, A: %d, Abs Rel Diff: %f, Max: %f",
+			string.format("%s: %f",
 				self:GetPhrase "TEXT_CURRENT",
-				team1,
-				team2,
-				reldiff,
-				maxdiff
+				p
 			)
 
-		local color = reldiff < maxdiff and self.NotifyGood or self.NotifyBad
+		local color = math.abs(p - 0.5) < maxprob and self.NotifyGood or self.NotifyBad
 		text.R = color[1]
 		text.G = color[2]
 		text.B = color[3]
 	end
 
-	local _, reldiff1, reldiff2, team1n, team2n = self:GetCanJoinTeam(1, localskill)
 	do
 		local text = self.text_marine
 
 		text:SetIsVisible(true)
 
 		text.Text =
-			string.format("%s M: %d, A: %d, Rel Diff: %f",
+			string.format("%s: %f",
 				self:GetPhrase "TEXT_JOIN_M",
-				team1n,
-				team2,
-				team1n / team2
+				p1
 			)
 
 		local color =
-			reldiff1 < reldiff2 and self.NotifyGood or
-			reldiff1 < maxdiff  and self.NotifyEqual or
+			p1abs < p2abs   and self.NotifyGood or
+			p1abs < maxprob and self.NotifyEqual or
 			self.NotifyBad
 
 		text.R = color[1]
@@ -99,16 +114,14 @@ function Plugin:NetworkUpdate()
 		text:SetIsVisible(true)
 
 		text.Text =
-			string.format("%s M: %d, A: %d, Rel Diff: %f",
+			string.format("%s: %f",
 				self:GetPhrase "TEXT_JOIN_A",
-				team1,
-				team2n,
-				team2n / team1
+				p2
 			)
 
 		local color =
-			reldiff2 < reldiff1 and self.NotifyGood or
-			reldiff2 < maxdiff  and self.NotifyEqual or
+			p2abs < p1abs and self.NotifyGood or
+			p2abs < maxprob and self.NotifyEqual or
 			self.NotifyBad
 
 		text.R = color[1]

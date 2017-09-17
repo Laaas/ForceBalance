@@ -6,7 +6,7 @@
 	"OK_ALIENS":"Willkommen bei den Aliens!",
 	"ERROR_1": "Sorry, du kannst wegen der Team Balance diesem Team nicht beitreten",
 	"ERROR_2": "Warte, dass sich die Team Balance ändert, oder trete dem anderen Team bei",
-	"TEXT_CURRENT":"Aktuelle Balance:",
-    "TEXT_JOIN_M":"Neue Balance wenn du Marines beitrittst:",
-    "TEXT_JOIN_A":"Neue Balance wenn du Aliens beitrittst:"
+	"TEXT_CURRENT":"Die aktuelle Wahrscheinlich das Marines gewinnen",
+    "TEXT_JOIN_M":"Neue Wahrscheinlichkeit wenn du Marines beitrittst",
+    "TEXT_JOIN_A":"Neue Wahrscheinlichkeit wenn du Aliens beitrittst"
 }
