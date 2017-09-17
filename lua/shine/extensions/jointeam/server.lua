@@ -22,6 +22,26 @@ function Plugin:Initialise()
 	self.dt.antistack  = self.Config.ForcePlayer
 	self.dt.acceptable = self.Config.AnythingBetterIsAcceptable
 
+	local old = JoinRandomTeam
+	function JoinRandomTeam(player)
+		if not self.Enabled then
+			return old(player)
+		end
+
+		local teama, teamb
+		if math.random(2) == 1 then
+			teama, teamb = 1, 2
+		else
+			teama, teamb = 2, 1
+		end
+
+		local gamerules = GetGamerules()
+		local success = gamerules:JoinTeam(player, teama)
+		if not success then
+			success = gamerules:JoinTeam(player, teamb)
+		end
+		return success
+	end
 	self.Enabled = true
 	return true
 end
