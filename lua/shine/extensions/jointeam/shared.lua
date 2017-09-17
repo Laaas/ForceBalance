@@ -18,4 +18,4 @@ function Plugin:CalculateProbability(team1, team2, playercount)
 	))
 end
 
-Shine:RegisterExtension("localhive", Plugin)
+Shine:RegisterExtension("jointeam", Plugin)
