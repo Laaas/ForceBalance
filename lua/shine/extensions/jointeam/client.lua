@@ -1,14 +1,16 @@
 local Plugin = Plugin
 local Shine = Shine
 
+Log "\n\nLoading client.lua!\n\n"
+
 function Plugin:Initialise()
+	Log "Loaded jointeam on client!"
 	self.text_current = Shine.ScreenText.Add("jointeam_current", {
 		X = 0.6,
 		Y = 0.5,
 		Text = "",
 		Alignment = 0,
 	})
-	self.text_current:SetIsVisible(false)
 
 	self.text_marine = Shine.ScreenText.Add("jointeam_marine", {
 		X = 0.6,
@@ -16,7 +18,6 @@ function Plugin:Initialise()
 		Text = "",
 		Alignment = 0
 	})
-	self.text_marine:SetIsVisible(false)
 
 	self.text_alien = Shine.ScreenText.Add("jointeam_alien", {
 		X = 0.6,
@@ -24,7 +25,6 @@ function Plugin:Initialise()
 		Text = "",
 		Alignment = 0
 	})
-	self.text_alien:SetIsVisible(false)
 
 	self:NetworkUpdate()
 
@@ -33,13 +33,26 @@ function Plugin:Initialise()
 end
 
 function Plugin:NetworkUpdate()
+	Log "Got a network update!"
 	local player = Client.GetLocalPlayer()
 	local team   = player:GetTeamNumber()
 
-	if self.dt.inform == false or team ~= 1 and team ~= 2 then
+	if self.dt.inform == false then
 		self.text_current:SetIsVisible(false)
+		self.text_marine:SetIsVisible(false)
+		self.text_alien:SetIsVisible(false)
+	elseif team ~= 1 and team ~= 2 then
+		self.text_current:SetIsVisible(true)
 		self.text_marine:SetIsVisible(true)
 		self.text_alien:SetIsVisible(true)
+	elseif GetGameInfoEntity():GetState() ~= kGameState.Started then
+		self.text_current:SetIsVisible(true)
+		self.text_marine:SetIsVisible(false)
+		self.text_alien:SetIsVisible(false)
+	else
+		self.text_current:SetIsVisible(false)
+		self.text_marine:SetIsVisible(false)
+		self.text_alien:SetIsVisible(false)
 		return
 	end
 
@@ -73,8 +86,6 @@ function Plugin:NetworkUpdate()
 	do
 		local text = self.text_current
 
-		text:SetIsVisible(true)
-
 		text.Text =
 			string.format("%s: %f",
 				self:GetPhrase "TEXT_CURRENT",
@@ -89,8 +100,6 @@ function Plugin:NetworkUpdate()
 
 	do
 		local text = self.text_marine
-
-		text:SetIsVisible(true)
 
 		text.Text =
 			string.format("%s: %f",
@@ -110,8 +119,6 @@ function Plugin:NetworkUpdate()
 
 	do
 		local text = self.text_alien
-
-		text:SetIsVisible(true)
 
 		text.Text =
 			string.format("%s: %f",

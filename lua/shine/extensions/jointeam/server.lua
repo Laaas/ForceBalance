@@ -1,19 +1,24 @@
 --The plugin table registered in shared.lua is passed in as the global "Plugin".
 local Plugin = Plugin
+local Shine  = Shine
+
+Log "Loading server.lua!"
 
 Plugin.HasConfig = true
 Plugin.ConfigName = "JoinTeam.json"
 Plugin.DefaultConfig = {
-    InformPlayer = true,
+	InformPlayer = true,
 	ForcePlayer = true,
-	MaxWinProbabilityj= 0.6,
+	MaxWinProbability = 0.6,
 	AnythingBetterIsAcceptable = false
 }
 Plugin.CheckConfig = true
+Plugin.CheckConfigTypes = true
 
 function Plugin:Initialise()
+	Log "Loaded jointeam on server!"
 	self.dt.maxprob    = math.abs(self.Config.MaxWinProbability - 0.5)
-	self.dt.inform     = self.Config.InformPlayer
+	self.dt.inform	   = self.Config.InformPlayer
 	self.dt.antistack  = self.Config.ForcePlayer
 	self.dt.acceptable = self.Config.AnythingBetterIsAcceptable
 
@@ -23,7 +28,7 @@ end
 
 function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 	if self.dt.antistack and not shineforce and (team == 1 or team == 2) then
-		skill = player:GetSkill()
+		skill = player:GetPlayerSkill()
 		skill = math.max(skill * -100, skill) -- For bots
 
 		local team1 = self.dt.team1
@@ -40,7 +45,7 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 			end
 		end
 
-		local p1 = math.abs(self:CalculateProbability(team1_n, team2,   playercount) - 0.5)
+		local p1 = math.abs(self:CalculateProbability(team1_n, team2,	playercount) - 0.5)
 		local p2 = math.abs(self:CalculateProbability(team1,   team2_n, playercount) - 0.5)
 
 		local maxprob = self.dt.maxprob
@@ -50,14 +55,22 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 			- 0.5))
 		end
 
+		local enabled, enforceteamsizes = Shine:IsExtensionEnabled "enforceteamsizes"
+		local other_team = team == 1 and 2 or 1
+
 		if
 			p1 < maxprob and
 			p2 < maxprob or
-			(p1 < p2) == (team == 1)
+			(p1 < p2) == (team == 1) or
+			enabled and (
+				enforceteamsizes:GetNumPlayers(gamerules:GetTeam(other_team)) >= enforceteamsizes.Config.Teams[other_team].MaxPlayers
+			)
 		then
+			self.NotifyPrefixColour = self.NotifyGood
 			self:NotifyTranslated(Player, "OK_CHOICE")
 			return
 		else
+			self.NotifyPrefixColour = self.NotifyBad
 			self:NotifyTranslated(Player, "ERROR_1")
 			return false
 		end
@@ -67,7 +80,7 @@ end
 function Plugin:UpdateSkill()
 	local t = {self, skill = 0}
 	local closure = function(player)
-		local skill = player:GetSkill()
+		local skill = player:GetPlayerSkill()
 		skill = math.max(skill * -100, skill)
 		t.skill = t.skill + skill
 	end
