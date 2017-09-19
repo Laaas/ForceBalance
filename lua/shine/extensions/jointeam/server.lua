@@ -8,7 +8,8 @@ Plugin.DefaultConfig = {
 	InformPlayer = true,
 	ForcePlayer = true,
 	MaxWinProbability = 0.6,
-	AnythingBetterIsAcceptable = false
+	AnythingBetterIsAcceptable = false,
+	UseMapBalance = true,
 }
 Plugin.CheckConfig = true
 Plugin.CheckConfigTypes = true
@@ -48,13 +49,15 @@ function Plugin:Initialise()
 end
 
 function Plugin:MapPostLoad()
+	if not self.Config.UseMapBalance then return end
+
 	local has_wonitor, wonitor = Shine:IsExtensionEnabled "wonitor"
 	if has_wonitor then
 		local url = wonitor.Config.WonitorURL
-		url = url:sub(1, -#"update.php"-1) .. "query.php?data=teamWins&numPlayers_gt=6&map_is=" .. Shared.GetMapName()
+		url = url:sub(1, -#"update.php"-1) .. "query.php?data=teamWins&numPlayers_gt=6&map_is=" .. Shared.GetMapName() .. "&version_ge=" .. (Shared.GetBuildNumber() - 5)
 		Shared.SendHTTPRequest(url, "POST", function(response)
 			response = json.decode(response)
-			Log("response: %s", response)
+			Log("%s: %s", url, response)
 			local a = response[1].team1Wins
 			local b = response[1].team2Wins
 			local mapbalance = a / (a + b)
