@@ -14,11 +14,14 @@ Plugin.CheckConfig = true
 Plugin.CheckConfigTypes = true
 
 function Plugin:Initialise()
-	Log "Loaded jointeam on server!"
 	self.dt.maxprob    = math.abs(self.Config.MaxWinProbability - 0.5)
 	self.dt.inform	   = self.Config.InformPlayer
 	self.dt.antistack  = self.Config.ForcePlayer
 	self.dt.acceptable = self.Config.AnythingBetterIsAcceptable
+
+	self:BindCommand("sh_jointeam_info", "JoinTeamInfo", function(client)
+		Shine:Notify(client, "PM", "JoinTeam", ("maxprob: %s\ninform: %s\nantistack: %s\nacceptable: %s\nmapbalance: %s"):format(self.dt.maxprob, self.dt.inform, self.dt.antistack, self.dt.acceptable, self.dt.mapbalance))
+	end):Help "Show JoinTeam info"
 
 	local old = JoinRandomTeam
 	function JoinRandomTeam(player)
