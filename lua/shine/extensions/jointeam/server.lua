@@ -2,8 +2,6 @@
 local Plugin = Plugin
 local Shine  = Shine
 
-Log "Loading server.lua!"
-
 Plugin.HasConfig = true
 Plugin.ConfigName = "JoinTeam.json"
 Plugin.DefaultConfig = {
@@ -79,9 +77,9 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 		local other_team = team == 1 and 2 or 1
 
 		if
-			p1 < maxprob and
-			p2 < maxprob or
-			(p1 < p2) == (team == 1) or
+			p1 < maxprob and p2 < maxprob or
+			math.abs(p1 - p2) < 0.001     or
+			(p1 < p2) == (team == 1)      or
 			enabled and (
 				enforceteamsizes:GetNumPlayers(gamerules:GetTeam(other_team)) >= enforceteamsizes.Config.Teams[other_team].MaxPlayers
 			)
