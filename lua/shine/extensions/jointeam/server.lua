@@ -44,6 +44,22 @@ function Plugin:Initialise()
 	return true
 end
 
+function Plugin:MapPostLoad()
+	local has_wonitor, wonitor = Shine:IsExtensionEnabled "wonitor"
+	if has_wonitor then
+		local url = wonitor.Config.WonitorURL
+		url = url:sub(1, -#"update.php"-1) .. "query.php?data=teamWins&numPlayers_gt=6&map_is=" .. Shared.GetMapName()
+		Shared.SendHTTPRequest(url, "POST", function(response)
+			response = json.decode(response)
+			Log("response: %s", response)
+			local a = response[1].team1Wins
+			local b = response[1].team2Wins
+			local mapbalance = a / (a + b)
+			self.dt.mapbalance = math.log(mapbalance / (1 - mapbalance))
+		end)
+	end
+end
+
 function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 	if self.dt.antistack and not shineforce and (team == 1 or team == 2) then
 		skill = player:GetPlayerSkill()
