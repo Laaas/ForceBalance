@@ -10,24 +10,28 @@ Plugin.DefaultConfig = {
 	MaxWinProbability = 0.6,
 	AnythingBetterIsAcceptable = false,
 	UseMapBalance = true,
+	SkillUnimportance = 500,
 }
 Plugin.CheckConfig = true
 Plugin.CheckConfigTypes = true
 
+local eq = Plugin.eq
+
 function Plugin:Initialise()
-	self.dt.maxprob    = math.abs(self.Config.MaxWinProbability - 0.5)
-	self.dt.inform	   = self.Config.InformPlayer
-	self.dt.antistack  = self.Config.ForcePlayer
-	self.dt.acceptable = self.Config.AnythingBetterIsAcceptable
+	self.dt.maxprob      = math.abs(self.Config.MaxWinProbability - 0.5)
+	self.dt.inform       = self.Config.InformPlayer
+	self.dt.antistack    = self.Config.ForcePlayer
+	self.dt.acceptable   = self.Config.AnythingBetterIsAcceptable
+	self.dt.unimportance = self.Config.SkillUnimportance
 
 	self:BindCommand("sh_jointeam_info", "JoinTeamInfo", function(client)
-		Shine:Notify(client, "PM", "JoinTeam", "maxprob:    " .. tostring(self.dt.maxprob))
-		Shine:Notify(client, "PM", "JoinTeam", "inform:     " .. tostring(self.dt.inform))
-		Shine:Notify(client, "PM", "JoinTeam", "antistack:  " .. tostring(self.dt.antistack))
-		Shine:Notify(client, "PM", "JoinTeam", "acceptable: " .. tostring(self.dt.acceptable))
-		Shine:Notify(client, "PM", "JoinTeam", "mapbalance: " .. tostring(self.dt.mapbalance))
-		Shine:Notify(client, "PM", "JoinTeam", "team1:      " .. tostring(self.dt.team1))
-		Shine:Notify(client, "PM", "JoinTeam", "team2:      " .. tostring(self.dt.team2))
+		Shine:Notify(client, "PM", "JoinTeam", "maxprob:\t" .. tostring(self.dt.maxprob))
+		Shine:Notify(client, "PM", "JoinTeam", "inform:\t" .. tostring(self.dt.inform))
+		Shine:Notify(client, "PM", "JoinTeam", "antistack:\t" .. tostring(self.dt.antistack))
+		Shine:Notify(client, "PM", "JoinTeam", "acceptable:\t" .. tostring(self.dt.acceptable))
+		Shine:Notify(client, "PM", "JoinTeam", "mapbalance:\t" .. tostring(self.dt.mapbalance))
+		Shine:Notify(client, "PM", "JoinTeam", "team1:\t" .. tostring(self.dt.team1))
+		Shine:Notify(client, "PM", "JoinTeam", "team2:\t" .. tostring(self.dt.team2))
 	end):Help "Show JoinTeam info"
 
 	local old = JoinRandomTeam
@@ -106,7 +110,7 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 
 		if
 			p1 < maxprob and p2 < maxprob or
-			math.abs(p1 - p2) < 0.001     or
+			eq(p1, p2)                    or
 			(p1 < p2) == (team == 1)      or
 			enabled and (
 				enforceteamsizes:GetNumPlayers(gamerules:GetTeam(other_team)) >= enforceteamsizes.Config.Teams[other_team].MaxPlayers
@@ -135,6 +139,8 @@ function Plugin:UpdateSkill()
 	t.skill = 0
 	GetGamerules().team2:ForEachPlayer(closure)
 	self.dt.team2 = t.skill
+	local gamerules = GetGamerules()
+	self.dt.playercount = gamerules.team1:GetNumPlayers() + gamerules.team2:GetNumPlayers()
 end
 
 function Plugin:PostJoinTeam()
