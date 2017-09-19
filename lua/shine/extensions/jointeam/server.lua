@@ -21,7 +21,13 @@ function Plugin:Initialise()
 	self.dt.acceptable = self.Config.AnythingBetterIsAcceptable
 
 	self:BindCommand("sh_jointeam_info", "JoinTeamInfo", function(client)
-		Shine:Notify(client, "PM", "JoinTeam", ("maxprob: %s\ninform: %s\nantistack: %s\nacceptable: %s\nmapbalance: %s"):format(self.dt.maxprob, self.dt.inform, self.dt.antistack, self.dt.acceptable, self.dt.mapbalance))
+		Shine:Notify(client, "PM", "JoinTeam", "maxprob:    " .. tostring(self.dt.maxprob))
+		Shine:Notify(client, "PM", "JoinTeam", "inform:     " .. tostring(self.dt.inform))
+		Shine:Notify(client, "PM", "JoinTeam", "antistack:  " .. tostring(self.dt.antistack))
+		Shine:Notify(client, "PM", "JoinTeam", "acceptable: " .. tostring(self.dt.acceptable))
+		Shine:Notify(client, "PM", "JoinTeam", "mapbalance: " .. tostring(self.dt.mapbalance))
+		Shine:Notify(client, "PM", "JoinTeam", "team1:      " .. tostring(self.dt.team1))
+		Shine:Notify(client, "PM", "JoinTeam", "team2:      " .. tostring(self.dt.team2))
 	end):Help "Show JoinTeam info"
 
 	local old = JoinRandomTeam
