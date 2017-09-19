@@ -3,6 +3,12 @@ Plugin.NotifyBad   = {255, 0,   0}
 Plugin.NotifyGood  = {0,   255, 0}
 Plugin.NotifyEqual = {0,   150, 255}
 
+Plugin.Conflicts = {
+	DisableThem = {
+		"jointeam"
+	}
+}
+
 function Plugin:SetupDataTable()
     self:AddDTVar("integer (0 to " .. 2^16-1 .. ")", "team1", 0)
     self:AddDTVar("integer (0 to " .. 2^16-1 .. ")", "team2", 0)
@@ -31,9 +37,9 @@ local function NetworkUpdate(self)
 	local player = Client.GetLocalPlayer()
 	local team   = player:GetTeamNumber()
 
-	Shine.ScreenText.Remove "jointeam_current"
-	Shine.ScreenText.Remove "jointeam_marine"
-	Shine.ScreenText.Remove "jointeam_alien"
+	Shine.ScreenText.Remove "forcebalance_current"
+	Shine.ScreenText.Remove "forcebalance_marine"
+	Shine.ScreenText.Remove "forcebalance_alien"
 
 	if
 		self.dt.inform == false or
@@ -53,7 +59,7 @@ local function NetworkUpdate(self)
 	Log("team1: %s, team2: %s, playercount: %s, p: %s", team1, team2, playercount, p)
 
 	local color = (math.abs(p - 0.5) < maxprob or p ~= p) and self.NotifyGood or self.NotifyBad
-	Shine.ScreenText.Add("jointeam_current", {
+	Shine.ScreenText.Add("forcebalance_current", {
 		X = 0.6,
 		Y = 0.5,
 		Text = string.format("%s: %f", self:GetPhrase "TEXT_CURRENT", p),
@@ -82,7 +88,7 @@ local function NetworkUpdate(self)
 		eq(p1abs, p2abs) and self.NotifyGood  or
 		p1abs < maxprob  and self.NotifyEqual or
 		self.NotifyBad
-	Shine.ScreenText.Add("jointeam_marine", {
+	Shine.ScreenText.Add("forcebalance_marine", {
 		X = 0.6,
 		Y = 0.55,
 		Text = string.format("%s: %f", self:GetPhrase "TEXT_JOIN_M", p1),
@@ -97,7 +103,7 @@ local function NetworkUpdate(self)
 		eq(p1abs, p2abs) and self.NotifyGood  or
 		p2abs < maxprob  and self.NotifyEqual or
 		self.NotifyBad
-	Shine.ScreenText.Add("jointeam_alien", {
+	Shine.ScreenText.Add("forcebalance_alien", {
 		X = 0.6,
 		Y = 0.6,
 		Text = string.format("%s: %f", self:GetPhrase "TEXT_JOIN_A", p2),
@@ -119,4 +125,4 @@ function Plugin:NetworkUpdate()
 end
 
 
-Shine:RegisterExtension("jointeam", Plugin)
+Shine:RegisterExtension("forcebalance", Plugin)

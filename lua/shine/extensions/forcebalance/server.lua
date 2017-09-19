@@ -3,7 +3,7 @@ local Plugin = Plugin
 local Shine  = Shine
 
 Plugin.HasConfig = true
-Plugin.ConfigName = "JoinTeam.json"
+Plugin.ConfigName = "ForceBalance.json"
 Plugin.DefaultConfig = {
 	InformPlayer = true,
 	ForcePlayer = true,
@@ -24,15 +24,15 @@ function Plugin:Initialise()
 	self.dt.acceptable   = self.Config.AnythingBetterIsAcceptable
 	self.dt.unimportance = self.Config.SkillUnimportance
 
-	self:BindCommand("sh_jointeam_info", "JoinTeamInfo", function(client)
-		Shine:Notify(client, "PM", "JoinTeam", "maxprob:\t" .. tostring(self.dt.maxprob))
-		Shine:Notify(client, "PM", "JoinTeam", "inform:\t" .. tostring(self.dt.inform))
-		Shine:Notify(client, "PM", "JoinTeam", "antistack:\t" .. tostring(self.dt.antistack))
-		Shine:Notify(client, "PM", "JoinTeam", "acceptable:\t" .. tostring(self.dt.acceptable))
-		Shine:Notify(client, "PM", "JoinTeam", "mapbalance:\t" .. tostring(self.dt.mapbalance))
-		Shine:Notify(client, "PM", "JoinTeam", "team1:\t" .. tostring(self.dt.team1))
-		Shine:Notify(client, "PM", "JoinTeam", "team2:\t" .. tostring(self.dt.team2))
-	end):Help "Show JoinTeam info"
+	self:BindCommand("sh_balance_info", "BalanceInfo", function(client)
+		Shine:Notify(client, "PM", "ForceBalance", "maxprob:\t" .. tostring(self.dt.maxprob))
+		Shine:Notify(client, "PM", "ForceBalance", "inform:\t" .. tostring(self.dt.inform))
+		Shine:Notify(client, "PM", "ForceBalance", "antistack:\t" .. tostring(self.dt.antistack))
+		Shine:Notify(client, "PM", "ForceBalance", "acceptable:\t" .. tostring(self.dt.acceptable))
+		Shine:Notify(client, "PM", "ForceBalance", "mapbalance:\t" .. tostring(self.dt.mapbalance))
+		Shine:Notify(client, "PM", "ForceBalance", "team1:\t" .. tostring(self.dt.team1))
+		Shine:Notify(client, "PM", "ForceBalance", "team2:\t" .. tostring(self.dt.team2))
+	end):Help "Show balance info"
 
 	local old = JoinRandomTeam
 	function JoinRandomTeam(player)
