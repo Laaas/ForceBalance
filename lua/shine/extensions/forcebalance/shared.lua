@@ -114,13 +114,12 @@ local function NetworkUpdate(self)
 	})
 end
 
-local function handler(err)
-	Shared.Message(debug.traceback(err))
-end
-
 function Plugin:NetworkUpdate()
 	if Client then
-		xpcall(NetworkUpdate, handler, self)
+		local success, message = pcall(NetworkUpdate, self)
+		if success == false then
+			Shared.Message(debug.traceback(message))
+		end
 	end
 end
 

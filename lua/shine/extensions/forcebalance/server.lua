@@ -25,13 +25,15 @@ function Plugin:Initialise()
 	self.dt.unimportance = self.Config.SkillUnimportance
 
 	self:BindCommand("sh_balance_info", "BalanceInfo", function(client)
-		Shine:Notify(client, "PM", "ForceBalance", "maxprob:\t" .. tostring(self.dt.maxprob))
-		Shine:Notify(client, "PM", "ForceBalance", "inform:\t" .. tostring(self.dt.inform))
-		Shine:Notify(client, "PM", "ForceBalance", "antistack:\t" .. tostring(self.dt.antistack))
-		Shine:Notify(client, "PM", "ForceBalance", "acceptable:\t" .. tostring(self.dt.acceptable))
-		Shine:Notify(client, "PM", "ForceBalance", "mapbalance:\t" .. tostring(self.dt.mapbalance))
-		Shine:Notify(client, "PM", "ForceBalance", "team1:\t" .. tostring(self.dt.team1))
-		Shine:Notify(client, "PM", "ForceBalance", "team2:\t" .. tostring(self.dt.team2))
+		Shine:Notify(client, "PM", "ForceBalance", "maxprob:"      .. tostring(self.dt.maxprob))
+		Shine:Notify(client, "PM", "ForceBalance", "inform:"       .. tostring(self.dt.inform))
+		Shine:Notify(client, "PM", "ForceBalance", "antistack:"    .. tostring(self.dt.antistack))
+		Shine:Notify(client, "PM", "ForceBalance", "acceptable:"   .. tostring(self.dt.acceptable))
+		Shine:Notify(client, "PM", "ForceBalance", "unimportance:" .. tostring(self.dt.unimportance))
+		Shine:Notify(client, "PM", "ForceBalance", "mapbalance:"   .. tostring(self.dt.mapbalance))
+		Shine:Notify(client, "PM", "ForceBalance", "team1:"        .. tostring(self.dt.team1))
+		Shine:Notify(client, "PM", "ForceBalance", "team2:"        .. tostring(self.dt.team2))
+		Shine:Notify(client, "PM", "ForceBalance", "playercount:"  .. tostring(self.dt.playercount))
 	end):Help "Show balance info"
 
 	local old = JoinRandomTeam
@@ -113,15 +115,19 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 			eq(p1, p2)                    or
 			(p1 < p2) == (team == 1)      or
 			enabled and (
-				enforceteamsizes:GetNumPlayers(gamerules:GetTeam(other_team)) >= enforceteamsizes.Config.Teams[other_team].MaxPlayers
+				enforceteamsizes:GetNumPlayers(gamerules:GetTeam(other_team)) >= enforceteamsizes.Config.Teams["Team" .. other_team].MaxPlayers
 			)
 		then
+			Shared.Message "Accepted!"
 			self.NotifyPrefixColour = self.NotifyGood
 			self:NotifyTranslated(Player, "OK_CHOICE")
+			Shared.Message "Could return!"
 			return
 		else
+			Shared.Message "Accepted!"
 			self.NotifyPrefixColour = self.NotifyBad
 			self:NotifyTranslated(Player, "ERROR_1")
+			Shared.Message "Could return!"
 			return false
 		end
 	end
