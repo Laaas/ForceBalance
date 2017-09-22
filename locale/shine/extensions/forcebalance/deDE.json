@@ -1,8 +1,8 @@
 {
 	"NOTIFY_PREFIX": "[Mannschaft Wahl]",
 	"OK":            "Willkommen im Mannschaft deiner Wahl!",
-	"ERROR":         "Es tut mir leid, aber trittst du bei dieser Mannschaft, so zerstörst du die Balance",
+	"ERROR":         "Entschuldigung, aber trittst du bei dieser Mannschaft, zerstörst du die Balance",
 	"TEXT_CURRENT":  "Die aktuelle Wahrscheinlich das Marines gewinnen",
-    "TEXT_JOIN_M":   "Neue Wahrscheinlichkeit wenn du Marines beitrittst",
-    "TEXT_JOIN_A":   "Neue Wahrscheinlichkeit wenn du Aliens beitrittst"
+    "TEXT_JOIN_M":   "Neue Wahrscheinlichkeit wenn du bei Marines trittst",
+    "TEXT_JOIN_A":   "Neue Wahrscheinlichkeit wenn du bei Aliens trittst"
 }
