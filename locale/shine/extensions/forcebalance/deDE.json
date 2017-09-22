@@ -1,5 +1,5 @@
 {
-	"NOTIFY_PREFIX": "[Mannschaft Wahl]",
+	"NOTIFY_PREFIX": "[ForceBalance]",
 	"OK":            "Willkommen im Mannschaft deiner Wahl!",
 	"ERROR":         "Entschuldigung, aber trittst du bei dieser Mannschaft, zerstörst du die Balance",
 	"TEXT_CURRENT":  "Die aktuelle Wahrscheinlich das Marines gewinnen",

@@ -1,5 +1,5 @@
 {
-	"NOTIFY_PREFIX": "[JoinTeam]",
+	"NOTIFY_PREFIX": "[ForceBalance]",
 	"OK":            "Bienvenue dans l'équipe de votre choix!",
 	"ERROR":         "Désolé, mais si vous joindriez cette équipe, vous détruiriez la balance",
 	"TEXT_CURRENT":  "Probabilité actuelle pour que les marines gagnent",
