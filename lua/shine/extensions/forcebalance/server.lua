@@ -3,6 +3,7 @@ local Plugin = Plugin
 local Shine  = Shine
 
 local kPluginColor = {0x32, 0xA0, 0x40}
+local kMinSkill    = 250
 
 Plugin.HasConfig = true
 Plugin.ConfigName = "ForceBalance.json"
@@ -85,7 +86,7 @@ end
 function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 	if self.dt.antistack and not shineforce and (team == 1 or team == 2) then
 		skill = player:GetPlayerSkill()
-		skill = math.max(skill * -100, skill) -- For bots
+		skill = math.max(skill * -kMinSkill, skill) -- For bots
 
 		local team1 = self.dt.team1
 		local team2 = self.dt.team2
@@ -135,7 +136,7 @@ function Plugin:UpdateSkill()
 	local t = {self, skill = 0}
 	local closure = function(player)
 		local skill = player:GetPlayerSkill()
-		skill = math.max(skill * -100, skill)
+		skill = math.max(skill * -kMinSkill, skill)
 		t.skill = t.skill + skill
 	end
 	GetGamerules().team1:ForEachPlayer(closure)
