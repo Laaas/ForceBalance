@@ -2,6 +2,8 @@
 local Plugin = Plugin
 local Shine  = Shine
 
+local kPluginColor = {0x32, 0xA0, 0x40}
+
 Plugin.HasConfig = true
 Plugin.ConfigName = "ForceBalance.json"
 Plugin.DefaultConfig = {
@@ -23,6 +25,8 @@ function Plugin:Initialise()
 	self.dt.antistack    = self.Config.ForcePlayer
 	self.dt.acceptable   = self.Config.AnythingBetterIsAcceptable
 	self.dt.unimportance = self.Config.SkillUnimportance
+
+	self.NotifyPrefixColour = kPluginColor
 
 	self:BindCommand("sh_balance_info", "BalanceInfo", function(client)
 		Shine:Notify(client, "PM", "ForceBalance", "maxprob:"      .. tostring(self.dt.maxprob))
@@ -118,16 +122,10 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 				enforceteamsizes:GetNumPlayers(gamerules:GetTeam(other_team)) >= enforceteamsizes.Config.Teams["Team" .. other_team].MaxPlayers
 			)
 		then
-			Shared.Message "Accepted!"
-			self.NotifyPrefixColour = self.NotifyGood
-			self:NotifyTranslated(Player, "OK_CHOICE")
-			Shared.Message "Could return!"
+			self:NotifyTranslated(player, "OK")
 			return
 		else
-			Shared.Message "Accepted!"
-			self.NotifyPrefixColour = self.NotifyBad
-			self:NotifyTranslated(Player, "ERROR_1")
-			Shared.Message "Could return!"
+			self:NotifyTranslatedError(player, "ERROR")
 			return false
 		end
 	end

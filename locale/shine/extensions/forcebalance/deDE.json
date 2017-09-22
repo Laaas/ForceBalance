@@ -1,12 +1,8 @@
 {
-	"NOTIFY_PREFIX":"[Team Wahl]",
-	"OK_LESS_PLAYER": "Du kannst immer dem Team beitreten, das weniger Spieler hat",
-	"OK_CHOICE":"Willkommen im Team deiner Wahl!",
-	"OK_MARINES":"Wilkommen bei den Marines!",
-	"OK_ALIENS":"Willkommen bei den Aliens!",
-	"ERROR_1": "Sorry, du kannst wegen der Team Balance diesem Team nicht beitreten",
-	"ERROR_2": "Warte, dass sich die Team Balance ändert, oder trete dem anderen Team bei",
-	"TEXT_CURRENT":"Die aktuelle Wahrscheinlich das Marines gewinnen",
-    "TEXT_JOIN_M":"Neue Wahrscheinlichkeit wenn du Marines beitrittst",
-    "TEXT_JOIN_A":"Neue Wahrscheinlichkeit wenn du Aliens beitrittst"
+	"NOTIFY_PREFIX": "[Mannschaft Wahl]",
+	"OK":            "Willkommen im Mannschaft deiner Wahl!",
+	"ERROR":         "Es tut mir leid, aber trittst du bei dieser Mannschaft, so zerstörst du die Balance",
+	"TEXT_CURRENT":  "Die aktuelle Wahrscheinlich das Marines gewinnen",
+    "TEXT_JOIN_M":   "Neue Wahrscheinlichkeit wenn du Marines beitrittst",
+    "TEXT_JOIN_A":   "Neue Wahrscheinlichkeit wenn du Aliens beitrittst"
 }

@@ -1,12 +1,8 @@
 {
-	"NOTIFY_PREFIX":"[JoinTeam]",
-	"OK_LESS_PLAYER": "You can always join the team with less players",
-	"OK_CHOICE":"Welcome to the team of your choice!",
-	"OK_MARINES":"Welcome to Marines!",
-	"OK_ALIENS":"Welcome to Aliens!",
-	"ERROR_1": "Sorry, you can't join this team due to the teams balance",
-	"ERROR_2": "Wait for a change in team balance or join the other team",
-	"TEXT_CURRENT":"Current marine win probability",
-	"TEXT_JOIN_M":"New probability if you join the Marines",
-	"TEXT_JOIN_A":"New probability if you join the Aliens"
+	"NOTIFY_PREFIX": "[JoinTeam]",
+	"OK":            "Welcome to the team of your choice!",
+	"ERROR":         "Sorry, you would skew the balance too much if you joined this team",
+	"TEXT_CURRENT":  "Current marine win probability",
+	"TEXT_JOIN_M":   "New probability if you join the Marines",
+	"TEXT_JOIN_A":   "New probability if you join the Aliens"
 }
