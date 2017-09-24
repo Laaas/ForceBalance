@@ -1,8 +1,8 @@
 {
 	"NOTIFY_PREFIX": "[ForceBalance]",
 	"OK":            "Willkommen im Mannschaft deiner Wahl!",
-	"ERROR":         "Entschuldigung, aber trittst du bei dieser Mannschaft, zerst�rst du die Balance",
-	"TEXT_CURRENT":  "Die aktuelle Wahrscheinlich das Marines gewinnen",
-    "TEXT_JOIN_M":   "Neue Wahrscheinlichkeit wenn du bei Marines trittst",
-    "TEXT_JOIN_A":   "Neue Wahrscheinlichkeit wenn du bei Aliens trittst"
+	"ERROR":         "Entschuldigung, aber trittst du bei dieser Mannschaft, zerstörst du die Balance",
+	"TEXT_CURRENT":  "Die aktuelle Wahrscheinlich für dass die Marines gewinnen",
+	"TEXT_JOIN_M":   "Neue Wahrscheinlichkeit wenn du bei den Marines trittst",
+	"TEXT_JOIN_A":   "Neue Wahrscheinlichkeit wenn du bei den Aliens trittst"
 }
