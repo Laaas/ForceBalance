@@ -2,6 +2,8 @@ local Plugin = Plugin
 local Shine = Shine
 
 function Plugin:Initialise()
+	self.last_update = 0
+
 	self.Enabled = true
 	return true
 end

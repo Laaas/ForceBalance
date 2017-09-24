@@ -33,7 +33,7 @@ end
 
 local eq = Plugin.eq
 
-local function NetworkUpdate(self)
+local function NetworkUpdate(self, first)
 	local player = Client.GetLocalPlayer()
 	local team   = player:GetTeamNumber()
 
@@ -56,7 +56,7 @@ local function NetworkUpdate(self)
 	local playercount = self.dt.playercount
 
 	local p  = self:CalculateProbability(team1,         team2,         playercount)
-	Log("team1: %s, team2: %s, playercount: %s, p: %s", team1, team2, playercount, p)
+	if first == false then Log("team1: %s, team2: %s, playercount: %s, p: %s", team1, team2, playercount, p) end
 
 	local color = (math.abs(p - 0.5) < maxprob or p ~= p) and self.NotifyGood or self.NotifyBad
 	Shine.ScreenText.Add("forcebalance_current", {
@@ -67,6 +67,7 @@ local function NetworkUpdate(self)
 		R = color[1],
 		G = color[2],
 		B = color[3],
+		FadeIn = 0,
 	})
 
 	if team == 1 or team == 2 then return end
@@ -75,8 +76,6 @@ local function NetworkUpdate(self)
 	local p2 = self:CalculateProbability(team1,         team2 + skill, playercount + 1)
 	local p1abs = math.abs(p1 - 0.5)
 	local p2abs = math.abs(p2 - 0.5)
-
-	Log("p1abs: %s, p2abs: %s", p1abs, p2abs)
 
 	if self.dt.acceptable then
 		maxprob = math.max(maxprob, math.abs(p - 0.5))
@@ -96,6 +95,7 @@ local function NetworkUpdate(self)
 		R = color[1],
 		G = color[2],
 		B = color[3],
+		FadeIn = 0,
 	})
 
 	local color =
@@ -111,15 +111,30 @@ local function NetworkUpdate(self)
 		R = color[1],
 		G = color[2],
 		B = color[3],
+		FadeIn = 0,
 	})
 end
 
-function Plugin:NetworkUpdate()
-	if Client then
-		local success, message = pcall(NetworkUpdate, self)
+if Client then
+	-- We actually do it twice
+	-- Once to immediately update the text
+	-- Once to update in case of delayed netvars, which could e.g. cause the text to show while playing
+	--
+	-- We use pcall ourselves because the shine error handler can't handle this function for some reason.
+	function Plugin:NetworkUpdate()
+		if self.last_update == Shared.GetTime() then return end -- Don't update multiple times per tick, since the netvars won't change anyway.
+		self.last_update = Shared.GetTime()
+
+		local success, message = pcall(NetworkUpdate, self, true)
 		if success == false then
 			Shared.Message(debug.traceback(message))
 		end
+		self:SimpleTimer(0.5, function() -- Team netvar needs to be completely updated too.
+			local success, message = pcall(NetworkUpdate, self, false)
+			if success == false then
+				Shared.Message(debug.traceback(message))
+			end
+		end)
 	end
 end
 
