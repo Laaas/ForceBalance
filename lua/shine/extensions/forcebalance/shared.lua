@@ -129,16 +129,15 @@ if Client then
 		if self.last_update == Shared.GetTime() then return end -- Don't update multiple times per tick, since the netvars won't change anyway.
 		self.last_update = Shared.GetTime()
 
-		local success, message = pcall(NetworkUpdate, self, true)
-		if success == false then
-			Shared.Message(debug.traceback(message))
-		end
-		self:SimpleTimer(0.5, function() -- Team netvar needs to be completely updated too.
+		local f = function() -- Team netvar needs to be completely updated too.
 			local success, message = pcall(NetworkUpdate, self, false)
 			if success == false then
 				Shared.Message(debug.traceback(message))
 			end
-		end)
+		end
+
+		self:SimpleTimer(0.05, f)
+		self:SimpleTimer(0.5, f)
 	end
 end
 
