@@ -56,7 +56,6 @@ local function NetworkUpdate(self, first)
 	local playercount = self.dt.playercount
 
 	local p  = self:CalculateProbability(team1,         team2,         playercount)
-	if first == false then Log("team1: %s, team2: %s, playercount: %s, p: %s", team1, team2, playercount, p) end
 
 	local color = (math.abs(p - 0.5) < maxprob or p ~= p) and self.NotifyGood or self.NotifyBad
 	Shine.ScreenText.Add("forcebalance_current", {
@@ -70,12 +69,17 @@ local function NetworkUpdate(self, first)
 		FadeIn = 0,
 	})
 
-	if team == 1 or team == 2 then return end
+	if team == 1 or team == 2 then
+		if first == false then Log("team1: %s, team2: %s, playercount: %s, p: %s", team1, team2, playercount, p) end
+		return
+	end
 
 	local p1 = self:CalculateProbability(team1 + skill, team2,         playercount + 1)
 	local p2 = self:CalculateProbability(team1,         team2 + skill, playercount + 1)
 	local p1abs = math.abs(p1 - 0.5)
 	local p2abs = math.abs(p2 - 0.5)
+
+	if first == false then Log("team1: %s, team2: %s, playercount: %s, p: %s, p1abs: %s, p2abs: %s", team1, team2, playercount, p, p1abs, p2abs) end
 
 	if self.dt.acceptable then
 		maxprob = math.max(maxprob, math.abs(p - 0.5))
