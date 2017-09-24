@@ -12,8 +12,8 @@ Plugin.DefaultConfig = {
 	ForcePlayer = true,
 	MaxWinProbability = 0.6,
 	AnythingBetterIsAcceptable = false,
-	UseMapBalance = true,
-	SkillUnimportance = 500,
+	UseMapBalance = false,
+	SkillUnimportance = 100,
 }
 Plugin.CheckConfig = true
 Plugin.CheckConfigTypes = true
