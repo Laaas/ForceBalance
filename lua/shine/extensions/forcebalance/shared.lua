@@ -43,7 +43,7 @@ local function NetworkUpdate(self, first)
 
 	if
 		self.dt.inform == false or
-		(team == 1 or team == 2) and GetGameInfoEntity():GetState() == kGameState.Started
+		team ~= 0 and GetGameInfoEntity():GetState() == kGameState.Started
 	then
 		return
 	end
@@ -69,7 +69,7 @@ local function NetworkUpdate(self, first)
 		FadeIn = 0,
 	})
 
-	if team == 1 or team == 2 then
+	if team ~= 0 then
 		if first == false then Log("team1: %s, team2: %s, playercount: %s, p: %s", team1, team2, playercount, p) end
 		return
 	end
