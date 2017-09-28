@@ -146,12 +146,18 @@ function Plugin:UpdateSkill()
 	self.dt.team2 = t.skill
 	local gamerules = GetGamerules()
 	self.dt.playercount = gamerules.team1:GetNumPlayers() + gamerules.team2:GetNumPlayers()
+	Log("ForceBalance: %s %s %s", self.dt.team1, self.dt.team2, self.dt.playercount)
 end
 
-function Plugin:PostJoinTeam()
-	return self:UpdateSkill()
+function Plugin:PostJoinTeam(_, player)
+	self:UpdateSkill()
+	self:SendNetworkMessage(player, "UpdateTeams", {}, true)
+end
+
+function Plugin:SetGameState()
+	self:SendNetworkMessage(nil, "UpdateTeams", {}, true)
 end
 
 function Plugin:ClientDisconnect()
-	return self:UpdateSkill()
+	self:UpdateSkill()
 end
