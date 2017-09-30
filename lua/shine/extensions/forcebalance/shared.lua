@@ -5,7 +5,8 @@ Plugin.NotifyEqual = {0,   150, 255}
 
 Plugin.Conflicts = {
 	DisableThem = {
-		"jointeam"
+		"jointeam",
+		"enforceteamsizes"
 	}
 }
 

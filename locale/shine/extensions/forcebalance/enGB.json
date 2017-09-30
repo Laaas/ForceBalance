@@ -1,8 +1,9 @@
 {
-	"NOTIFY_PREFIX": "[ForceBalance]",
-	"OK":            "Welcome to the team of your choice!",
-	"ERROR":         "Sorry, you would skew the balance too much if you joined this team",
-	"TEXT_CURRENT":  "Current marine win probability",
-	"TEXT_JOIN_M":   "New probability if you join the Marines",
-	"TEXT_JOIN_A":   "New probability if you join the Aliens"
+	"NOTIFY_PREFIX":  "[ForceBalance]",
+	"OK":             "Welcome to the team of your choice!",
+	"ERROR":          "Sorry, you would skew the balance too much if you joined this team",
+	"ERROR_TOO_MANY": "Sorry, there would be too many players.",
+	"TEXT_CURRENT":   "Current marine win probability",
+	"TEXT_JOIN_M":    "New probability if you join the Marines",
+	"TEXT_JOIN_A":    "New probability if you join the Aliens"
 }

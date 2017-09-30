@@ -14,6 +14,7 @@ Plugin.DefaultConfig = {
 	AnythingBetterIsAcceptable = false,
 	UseMapBalance = false,
 	SkillUnimportance = 100,
+	MaxPlayers = 0,
 }
 Plugin.CheckConfig = true
 Plugin.CheckConfigTypes = true
@@ -85,6 +86,18 @@ end
 
 function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 	if self.dt.antistack and not shineforce and (team == 1 or team == 2) then
+		local playercount = 1
+		local teaminfos = GetEntities "TeamInfo"
+		for _, info in ipairs(teaminfos) do
+			if info:GetTeamNumber() == 1 or info:GetTeamNumber() == 2 then
+				playercount = playercount + info:GetPlayerCount()
+			end
+		end
+
+		if self.Config.MaxPlayers > 0 and playercount > self.Config.MaxPlayers then
+			self:NotifyTranslated(player, "ERROR_TOO_MANY")
+		end
+
 		skill = player:GetPlayerSkill()
 		skill = math.max(skill * -kMinSkill, skill) -- For bots
 
@@ -93,14 +106,6 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 
 		local team1_n = team1 + skill
 		local team2_n = team2 + skill
-
-		local playercount = 1
-		local teaminfos = GetEntities "TeamInfo"
-		for _, info in ipairs(teaminfos) do
-			if info:GetTeamNumber() == 1 or info:GetTeamNumber() == 2 then
-				playercount = playercount + info:GetPlayerCount()
-			end
-		end
 
 		local p1 = math.abs(self:CalculateProbability(team1_n, team2,	playercount) - 0.5)
 		local p2 = math.abs(self:CalculateProbability(team1,   team2_n, playercount) - 0.5)
@@ -112,16 +117,10 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 			- 0.5))
 		end
 
-		local enabled, enforceteamsizes = Shine:IsExtensionEnabled "enforceteamsizes"
-		local other_team = team == 1 and 2 or 1
-
 		if
 			p1 < maxprob and p2 < maxprob or
 			eq(p1, p2)                    or
-			(p1 < p2) == (team == 1)      or
-			enabled and (
-				enforceteamsizes:GetNumPlayers(gamerules:GetTeam(other_team)) >= enforceteamsizes.Config.Teams["Team" .. other_team].MaxPlayers
-			)
+			(p1 < p2) == (team == 1)
 		then
 			self:NotifyTranslated(player, "OK")
 			return
