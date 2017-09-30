@@ -10,8 +10,8 @@ Plugin.Conflicts = {
 }
 
 function Plugin:SetupDataTable()
-	self:AddDTVar("integer (0 to 65535)", "team1",        0)
-	self:AddDTVar("integer (0 to 65535)", "team2",        0)
+	self:AddDTVar("integer (0 to 1048575)", "team1",      0)
+	self:AddDTVar("integer (0 to 1048575)", "team2",      0)
 	self:AddDTVar("integer (0 to 255)",   "playercount",  0)
 	self:AddDTVar("float",                "maxprob",      0)
 	self:AddDTVar("boolean",              "antistack",    true)
