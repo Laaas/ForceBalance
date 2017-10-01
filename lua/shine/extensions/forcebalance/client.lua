@@ -2,7 +2,9 @@ local Plugin = Plugin
 local Shine = Shine
 
 function Plugin:Initialise()
-	self.last_update = 0
+	self.last_update = -1
+
+	self:NetworkUpdate()
 
 	self.Enabled = true
 	return true
