@@ -95,7 +95,8 @@ function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
 		end
 
 		if self.Config.MaxPlayers > 0 and playercount > self.Config.MaxPlayers then
-			self:NotifyTranslated(player, "ERROR_TOO_MANY")
+			self:NotifyTranslatedError(player, "ERROR_TOO_MANY")
+			return false
 		end
 
 		skill = player:GetPlayerSkill()
