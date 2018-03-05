@@ -13,7 +13,6 @@ Plugin.DefaultConfig = {
 	MaxWinProbability = 0.6,
 	AnythingBetterIsAcceptable = false,
 	UseMapBalance = false,
-	SkillUnimportance = 100,
 	MaxPlayers = 0,
 }
 Plugin.CheckConfig = true
@@ -26,7 +25,7 @@ function Plugin:Initialise()
 	self.dt.inform       = self.Config.InformPlayer
 	self.dt.antistack    = self.Config.ForcePlayer
 	self.dt.acceptable   = self.Config.AnythingBetterIsAcceptable
-	self.dt.unimportance = self.Config.SkillUnimportance
+	self.dt.unimportance = 100
 
 	self.NotifyPrefixColour = kPluginColor
 
