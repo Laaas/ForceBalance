@@ -20,6 +20,15 @@ Plugin.CheckConfigTypes = true
 
 local eq = Plugin.eq
 
+local old = assert(Server.GetConfigSetting)
+function Server.GetConfigSetting(name, ...)
+	if Plugin.Enabled and name == "force_even_teams_on_join" then
+		return false
+	else
+		return old(name, ...)
+	end
+end
+
 function Plugin:Initialise()
 	self.dt.maxprob      = math.abs(self.Config.MaxWinProbability - 0.5)
 	self.dt.inform       = self.Config.InformPlayer
