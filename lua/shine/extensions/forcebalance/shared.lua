@@ -1,4 +1,7 @@
-local Plugin = {}
+local Plugin = {
+	Version = "1.1"
+}
+
 Plugin.NotifyBad   = {255, 0,   0}
 Plugin.NotifyGood  = {0,   255, 0}
 Plugin.NotifyEqual = {0,   150, 255}

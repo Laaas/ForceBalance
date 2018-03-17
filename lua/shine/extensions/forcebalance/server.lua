@@ -93,7 +93,7 @@ function Plugin:MapPostLoad()
 end
 
 function Plugin:JoinTeam(gamerules, player, team, force, shineforce)
-	if self.dt.antistack and not shineforce and (team == 1 or team == 2) then
+	if self.dt.antistack and not shineforce and (team == 1 or team == 2) and not player:GetClient():GetIsVirtual() then
 		local playercount = 1
 		local teaminfos = GetEntities "TeamInfo"
 		for _, info in ipairs(teaminfos) do
@@ -154,7 +154,7 @@ function Plugin:UpdateSkill()
 	self.dt.team2 = t.skill
 	local gamerules = GetGamerules()
 	self.dt.playercount = gamerules.team1:GetNumPlayers() + gamerules.team2:GetNumPlayers()
-	Log("ForceBalance: %s %s %s", self.dt.team1, self.dt.team2, self.dt.playercount)
+	Print("ForceBalance: %i %i %i", self.dt.team1, self.dt.team2, self.dt.playercount)
 end
 
 function Plugin:PostJoinTeam(_, player)
