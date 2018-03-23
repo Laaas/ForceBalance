@@ -6,7 +6,7 @@ local kPluginColor = {0x32, 0xA0, 0x40}
 local kMinSkill    = 250
 
 Plugin.HasConfig = true
-Plugin.ConfigName = "ForceBalance.json"
+Plugin.ConfigName = "BalanceChecker.json"
 Plugin.DefaultConfig = {
 	InformPlayer = true,
 	ForcePlayer = true,
@@ -39,15 +39,15 @@ function Plugin:Initialise()
 	self.NotifyPrefixColour = kPluginColor
 
 	self:BindCommand("sh_balance_info", "BalanceInfo", function(client)
-		Shine:Notify(client, "PM", "ForceBalance", "maxprob:"      .. tostring(self.dt.maxprob))
-		Shine:Notify(client, "PM", "ForceBalance", "inform:"       .. tostring(self.dt.inform))
-		Shine:Notify(client, "PM", "ForceBalance", "antistack:"    .. tostring(self.dt.antistack))
-		Shine:Notify(client, "PM", "ForceBalance", "acceptable:"   .. tostring(self.dt.acceptable))
-		Shine:Notify(client, "PM", "ForceBalance", "unimportance:" .. tostring(self.dt.unimportance))
-		Shine:Notify(client, "PM", "ForceBalance", "mapbalance:"   .. tostring(self.dt.mapbalance))
-		Shine:Notify(client, "PM", "ForceBalance", "team1:"        .. tostring(self.dt.team1))
-		Shine:Notify(client, "PM", "ForceBalance", "team2:"        .. tostring(self.dt.team2))
-		Shine:Notify(client, "PM", "ForceBalance", "playercount:"  .. tostring(self.dt.playercount))
+		Shine:Notify(client, "PM", "BalanceChecker", "maxprob:"      .. tostring(self.dt.maxprob))
+		Shine:Notify(client, "PM", "BalanceChecker", "inform:"       .. tostring(self.dt.inform))
+		Shine:Notify(client, "PM", "BalanceChecker", "antistack:"    .. tostring(self.dt.antistack))
+		Shine:Notify(client, "PM", "BalanceChecker", "acceptable:"   .. tostring(self.dt.acceptable))
+		Shine:Notify(client, "PM", "BalanceChecker", "unimportance:" .. tostring(self.dt.unimportance))
+		Shine:Notify(client, "PM", "BalanceChecker", "mapbalance:"   .. tostring(self.dt.mapbalance))
+		Shine:Notify(client, "PM", "BalanceChecker", "team1:"        .. tostring(self.dt.team1))
+		Shine:Notify(client, "PM", "BalanceChecker", "team2:"        .. tostring(self.dt.team2))
+		Shine:Notify(client, "PM", "BalanceChecker", "playercount:"  .. tostring(self.dt.playercount))
 	end):Help "Show balance info"
 
 	local old = JoinRandomTeam
@@ -154,7 +154,7 @@ function Plugin:UpdateSkill()
 	self.dt.team2 = t.skill
 	local gamerules = GetGamerules()
 	self.dt.playercount = gamerules.team1:GetNumPlayers() + gamerules.team2:GetNumPlayers()
-	Print("ForceBalance: %i %i %i", self.dt.team1, self.dt.team2, self.dt.playercount)
+	Print("BalanceChecker: %i %i %i", self.dt.team1, self.dt.team2, self.dt.playercount)
 end
 
 function Plugin:PostJoinTeam(_, player)

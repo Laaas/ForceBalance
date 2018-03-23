@@ -1,5 +1,5 @@
 {
-	"NOTIFY_PREFIX":  "[ForceBalance]",
+	"NOTIFY_PREFIX":  "[Balance Checker]",
 	"OK":             "Welcome to the team of your choice!",
 	"ERROR":          "Sorry, you would skew the balance too much if you joined this team",
 	"ERROR_TOO_MANY": "Sorry, there would be too many players.",

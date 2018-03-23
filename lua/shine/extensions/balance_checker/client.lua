@@ -11,9 +11,9 @@ function Plugin:Initialise()
 end
 
 function Plugin:Cleanup()
-	Shine.ScreenText.Remove "forcebalance_current"
-	Shine.ScreenText.Remove "forcebalance_marine"
-	Shine.ScreenText.Remove "forcebalance_alien"
+	Shine.ScreenText.Remove "balance_checker_current"
+	Shine.ScreenText.Remove "balance_checker_marine"
+	Shine.ScreenText.Remove "balance_checker_alien"
 
 	self.BaseClass.Cleanup(self)
 

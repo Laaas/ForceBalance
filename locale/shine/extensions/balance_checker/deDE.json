@@ -1,5 +1,5 @@
 {
-	"NOTIFY_PREFIX":  "[ForceBalance]",
+	"NOTIFY_PREFIX":  "[Balance Checker]",
 	"OK":             "Willkommen in der Mannschaft deiner Wahl!",
 	"ERROR":          "Entschuldigung, aber trittst du bei dieser Mannschaft, zerstörst du die Balance",
 	"ERROR_TOO_MANY": "Entschuldigung, aber trittst du bei jeder Mannschaft, zu viele Spieler werden",

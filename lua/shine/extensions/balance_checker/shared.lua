@@ -44,9 +44,9 @@ if Client then
 		local player = Client.GetLocalPlayer()
 		local team   = player:GetTeamNumber()
 
-		Shine.ScreenText.Remove "forcebalance_current"
-		Shine.ScreenText.Remove "forcebalance_marine"
-		Shine.ScreenText.Remove "forcebalance_alien"
+		Shine.ScreenText.Remove "balance_checker_current"
+		Shine.ScreenText.Remove "balance_checker_marine"
+		Shine.ScreenText.Remove "balance_checker_alien"
 
 		if
 			self.dt.inform == false or
@@ -65,7 +65,7 @@ if Client then
 		local p = self:CalculateProbability(team1, team2, playercount)
 
 		local color = (math.abs(p - 0.5) < maxprob or p ~= p) and self.NotifyGood or self.NotifyBad
-		Shine.ScreenText.Add("forcebalance_current", {
+		Shine.ScreenText.Add("balance_checker_current", {
 			X = 0.6,
 			Y = 0.5,
 			Text = string.format("%s: %f", self:GetPhrase "TEXT_CURRENT", p),
@@ -98,7 +98,7 @@ if Client then
 			eq(p1abs, p2abs) and self.NotifyGood  or
 			p1abs < maxprob  and self.NotifyEqual or
 			self.NotifyBad
-		Shine.ScreenText.Add("forcebalance_marine", {
+		Shine.ScreenText.Add("balance_checker_marine", {
 			X = 0.6,
 			Y = 0.55,
 			Text = string.format("%s: %f", self:GetPhrase "TEXT_JOIN_M", p1),
@@ -114,7 +114,7 @@ if Client then
 			eq(p1abs, p2abs) and self.NotifyGood  or
 			p2abs < maxprob  and self.NotifyEqual or
 			self.NotifyBad
-		Shine.ScreenText.Add("forcebalance_alien", {
+		Shine.ScreenText.Add("balance_checker_alien", {
 			X = 0.6,
 			Y = 0.6,
 			Text = string.format("%s: %f", self:GetPhrase "TEXT_JOIN_A", p2),
@@ -153,4 +153,4 @@ if Client then
 	end
 end
 
-Shine:RegisterExtension("forcebalance", Plugin)
+Shine:RegisterExtension("balance_checker", Plugin)
